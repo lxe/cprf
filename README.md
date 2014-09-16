@@ -10,6 +10,7 @@ Asynchronously, recursively copy directories and files.
 
  - Copies broken symlinks
  - Fully asynchronous
+ - Limits file descriptors to 24 (per invocation)
  - Attempts to call back with meaningful errors
  - Tests!
 
@@ -28,10 +29,16 @@ cprf('./my_source', './my_destination', function (err) {
   if (err) {
     console.error(err);
   }
-});
+}, 24);
+
+/// where '24' is the asynchronous concurrency limit.
 ```
 
 ## Changelog
+
+#### 1.0.0
+
+ - Add default/adjustable concurrency limit
 
 #### 0.1.2
 

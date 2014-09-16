@@ -2,17 +2,13 @@ var fs = require('fs');
 var path = require('path');
 var async = require('async');
 
-function mkdir (dir, done) {
-  fs.exists(dir, function (exists) {
-    if (exists) return done();
-    fs.mkdir(dir, function (err) {
-      if (err) return done(new Error(err));
-      done();
-    });
-  });
-}
+var DEFAULT_LIMIT = 24;
 
-function copy (src, dest, done) {
+module.exports = copy;
+
+function copy (src, dest, done, limit) {
+  limit = limit || DEFAULT_LIMIT;
+
   fs.lstat(src, function (err, stats) {
     if (err) return done(new Error(err));
 
@@ -21,11 +17,8 @@ function copy (src, dest, done) {
         if (err) return done(new Error(err));
         return fs.readdir(src, function (err, files) {
           if (err) return done(new Error(err));
-          async.each(files, function(filename, done) {
-            copy(
-              path.join(src, filename), 
-              path.join(dest, filename), 
-              done);
+          async.eachLimit(files, limit, function (file, done) {
+            copy(path.join(src, file), path.join(dest, file), done, limit);
           }, done);
         });
       });
@@ -40,18 +33,35 @@ function copy (src, dest, done) {
       });
     }
 
-    var fin = fs.createReadStream(src);
-    var fout = fs.createWriteStream(dest);
-
-    fin.on('end', function () {
-      fs.chmod(dest, stats.mode, function (err) {
-        if (err) return done(new Error(err));
-        done();
-      });
+    copyFile(src, dest, function (err) {
+      if (err) return done(err);
+      fs.chmod(dest, stats.mode, done);
     });
-    fin.on('error', done);
-    fin.pipe(fout);
+
   });
 }
 
-module.exports = copy;
+function mkdir (dir, done) {
+  fs.exists(dir, function (exists) {
+    return exists ? done() : fs.mkdir(dir, done);
+  });
+}
+
+function copyFile (src, dest, done) {
+  var doneCalled = false;
+
+  var fin = fs.createReadStream(src);
+  fin.on('error', finish);
+
+  var fout = fs.createWriteStream(dest);
+  fout.on('error', finish);
+  fout.on('close', finish);
+
+  fin.pipe(fout);
+
+  function finish (err) {
+    if (doneCalled) return;
+    doneCalled = true;
+    done(err);
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "cprf",
+  "version": "0.1.0",
+  "description": "Recursively copy files and directories.",
+  "main": "cprf.js",
+  "scripts": {
+    "test": "node test/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/lxe/cprf"
+  },
+  "keywords": [
+    "copy",
+    "recursive",
+    "fs",
+    "files",
+    "directory"
+  ],
+  "author": "Aleksey Smolenchuk <lxe@lxe.co>",
+  "license": "ISC",
+  "dependencies": {
+    "async": "0.9.0",
+    "rimraf": "2.2.8"
+  },
+  "devDependencies": {
+    "tape": "2.14.0"
+  }
+}

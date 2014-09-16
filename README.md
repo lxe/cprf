@@ -46,7 +46,7 @@ cprf('./my_source', './my_destination', function (err) {
 
 ## TODOs
 
- - Concurrency limiting to prevent EMFILEs
+ - Add automatic concurrency limiting based on open file descriptors
 
 ## License
 

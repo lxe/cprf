@@ -9,9 +9,10 @@ Asynchronously, recursively copy directories and files.
 ## Features
 
  - Copies broken symlinks
+ - Strictly programmatic approach
+ - Simple usage interface
  - Fully asynchronous
  - Limits file descriptors to 24 (per invocation)
- - Attempts to call back with meaningful errors
  - Tests!
 
 ## Installation

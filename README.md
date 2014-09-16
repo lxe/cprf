@@ -9,7 +9,6 @@ Asynchronously, recursively copy directories and files.
 ## Features
 
  - Copies broken symlinks
- - Limits concurrency automatically to your system's ulimit
  - Fully asynchronous
  - Attempts to call back with meaningful errors
  - Tests!
@@ -31,6 +30,16 @@ cprf('./my_source', './my_destination', function (err) {
   }
 });
 ```
+
+## Changelog
+
+#### 0.1.2
+
+ - Fixed/enable file mode duplication
+
+## TODOs
+
+ - Concurrency limiting to prevent EMFILEs
 
 ## License
 

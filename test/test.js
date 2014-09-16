@@ -6,8 +6,7 @@ var test = require('tape');
 var rimraf = require('rimraf');
 var cprf = require('../');
 
-// fixtures:
-// .
+// fixtures
 // ├── another_file.txt
 // ├── bad_symlink.txt -> ./notexists
 // ├── dir_1_level
@@ -24,10 +23,9 @@ var cprf = require('../');
 // │       ├── another_file.txt
 // │       ├── file.txt
 // │       └── orphan_dir
+// ├── executable
 // ├── file.txt
 // └── good_symlink.txt -> file.txt
-
-// 6 directories, 12 files
 
 function diff (src, dest, t, done) {
   async.parallel([

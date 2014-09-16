@@ -43,9 +43,13 @@ function copy (src, dest, done) {
     var fin = fs.createReadStream(src);
     var fout = fs.createWriteStream(dest);
 
-    fin.on('end', done);
+    fin.on('end', function () {
+      fs.chmod(dest, stats.mode, function (err) {
+        if (err) return done(new Error(err));
+        done();
+      });
+    });
     fin.on('error', done);
-
     fin.pipe(fout);
   });
 }

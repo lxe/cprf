@@ -4,7 +4,7 @@
 [![Dependency Status](https://david-dm.org/lxe/cprf.svg?theme=shields.io)](https://david-dm.org/lxe/cprf)
 [![devDependency Status](https://david-dm.org/lxe/cprf/dev-status.svg?theme=shields.io)](https://david-dm.org/lxe/cprf#info=devDependencies)
 
-Asynchronously, recirsively copy directories and files.
+Asynchronously, recursively copy directories and files.
 
 ## Features
 

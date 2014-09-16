@@ -9,6 +9,8 @@ Asynchronously, recursively copy directories and files.
 ## Features
 
  - Copies broken symlinks
+ - Always overwrites destination
+ - Automatically creates non-existing directories
  - Strictly programmatic approach
  - Simple usage interface
  - Fully asynchronous

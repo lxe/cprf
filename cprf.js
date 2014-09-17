@@ -1,14 +1,10 @@
-var fs = require('fs');
+var fs = require('graceful-fs');
 var path = require('path');
 var async = require('async');
 
-var DEFAULT_LIMIT = 24;
-
 module.exports = copy;
 
-function copy (src, dest, done, limit) {
-  limit = limit || DEFAULT_LIMIT;
-
+function copy (src, dest, done) {
   fs.lstat(src, function (err, stats) {
     if (err) return done(new Error(err));
 
@@ -17,8 +13,8 @@ function copy (src, dest, done, limit) {
         if (err) return done(new Error(err));
         return fs.readdir(src, function (err, files) {
           if (err) return done(new Error(err));
-          async.eachLimit(files, limit, function (file, done) {
-            copy(path.join(src, file), path.join(dest, file), done, limit);
+          async.each(files, function (file, done) {
+            copy(path.join(src, file), path.join(dest, file), done);
           }, done);
         });
       });

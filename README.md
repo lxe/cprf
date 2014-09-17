@@ -14,7 +14,7 @@ Asynchronously, recursively copy directories and files.
  - Strictly programmatic approach
  - Simple usage interface
  - Fully asynchronous
- - Limits file descriptors to 24 (per invocation)
+ - Uses graceful-fs to retry EMFILE errors
  - Tests!
 
 ## Installation
@@ -32,12 +32,14 @@ cprf('./my_source', './my_destination', function (err) {
   if (err) {
     console.error(err);
   }
-}, 24);
-
-/// where '24' is the asynchronous concurrency limit.
+});
 ```
 
 ## Changelog
+
+#### 1.1.0
+
+ - No longer need concurrency limit using graceful-fs
 
 #### 1.0.0
 
@@ -46,10 +48,6 @@ cprf('./my_source', './my_destination', function (err) {
 #### 0.1.2
 
  - Fixed/enable file mode duplication
-
-## TODOs
-
- - Add automatic concurrency limiting based on open file descriptors
 
 ## License
 

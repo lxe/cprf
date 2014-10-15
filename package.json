@@ -25,11 +25,11 @@
   "author": "Aleksey Smolenchuk <lxe@lxe.co>",
   "license": "ISC",
   "dependencies": {
-    "async": "~0.9.x",
     "graceful-fs": "~3.0.2",
-    "rimraf": "~2.2.x"
+    "run-parallel": "^1.0.0"
   },
   "devDependencies": {
-    "tape": "2.14.0"
+    "tape": "2.14.0",
+    "rimraf": "~2.2.x"
   }
 }

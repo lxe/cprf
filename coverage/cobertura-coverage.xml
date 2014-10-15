@@ -1,0 +1,92 @@
+<?xml version="1.0" ?>
+<!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
+<coverage lines-valid="37"  lines-covered="37"  line-rate="1"  branches-valid="18"  branches-covered="11"  branch-rate="0.6111"  timestamp="1410918801860" complexity="0" version="0.1">
+<sources>
+	<source>/Users/aleksey/devel/cprf</source>
+</sources>
+<packages>
+	<package name="cprf"  line-rate="1"  branch-rate="0.6111" >
+	<classes>
+		<class name="cprf.js"  filename="cprf.js"  line-rate="1"  branch-rate="0.6111" >
+		<methods>
+			<method name="copy"  hits="19"  signature="()V" >
+				<lines><line number="7"  hits="19" /></lines>
+			</method>
+			<method name="(anonymous_2)"  hits="19"  signature="()V" >
+				<lines><line number="8"  hits="19" /></lines>
+			</method>
+			<method name="(anonymous_3)"  hits="6"  signature="()V" >
+				<lines><line number="12"  hits="6" /></lines>
+			</method>
+			<method name="(anonymous_4)"  hits="6"  signature="()V" >
+				<lines><line number="14"  hits="6" /></lines>
+			</method>
+			<method name="(anonymous_5)"  hits="18"  signature="()V" >
+				<lines><line number="16"  hits="18" /></lines>
+			</method>
+			<method name="(anonymous_6)"  hits="2"  signature="()V" >
+				<lines><line number="24"  hits="2" /></lines>
+			</method>
+			<method name="(anonymous_7)"  hits="2"  signature="()V" >
+				<lines><line number="26"  hits="2" /></lines>
+			</method>
+			<method name="(anonymous_8)"  hits="11"  signature="()V" >
+				<lines><line number="32"  hits="11" /></lines>
+			</method>
+			<method name="mkdir"  hits="6"  signature="()V" >
+				<lines><line number="40"  hits="6" /></lines>
+			</method>
+			<method name="(anonymous_10)"  hits="6"  signature="()V" >
+				<lines><line number="41"  hits="6" /></lines>
+			</method>
+			<method name="copyFile"  hits="11"  signature="()V" >
+				<lines><line number="46"  hits="11" /></lines>
+			</method>
+			<method name="finish"  hits="11"  signature="()V" >
+				<lines><line number="58"  hits="11" /></lines>
+			</method>
+		</methods>
+		<lines>
+			<line number="1"  hits="1"  branch="false" />
+			<line number="2"  hits="1"  branch="false" />
+			<line number="3"  hits="1"  branch="false" />
+			<line number="5"  hits="1"  branch="false" />
+			<line number="7"  hits="1"  branch="false" />
+			<line number="8"  hits="19"  branch="false" />
+			<line number="9"  hits="19"  branch="true"  condition-coverage="50% (1/2)" />
+			<line number="11"  hits="19"  branch="true"  condition-coverage="100% (2/2)" />
+			<line number="12"  hits="6"  branch="false" />
+			<line number="13"  hits="6"  branch="true"  condition-coverage="50% (1/2)" />
+			<line number="14"  hits="6"  branch="false" />
+			<line number="15"  hits="6"  branch="true"  condition-coverage="50% (1/2)" />
+			<line number="16"  hits="6"  branch="false" />
+			<line number="17"  hits="18"  branch="false" />
+			<line number="23"  hits="13"  branch="true"  condition-coverage="100% (2/2)" />
+			<line number="24"  hits="2"  branch="false" />
+			<line number="25"  hits="2"  branch="true"  condition-coverage="50% (1/2)" />
+			<line number="26"  hits="2"  branch="false" />
+			<line number="27"  hits="2"  branch="false" />
+			<line number="32"  hits="11"  branch="false" />
+			<line number="33"  hits="11"  branch="true"  condition-coverage="50% (1/2)" />
+			<line number="34"  hits="11"  branch="false" />
+			<line number="40"  hits="1"  branch="false" />
+			<line number="41"  hits="6"  branch="false" />
+			<line number="42"  hits="6"  branch="true"  condition-coverage="50% (1/2)" />
+			<line number="46"  hits="1"  branch="false" />
+			<line number="47"  hits="11"  branch="false" />
+			<line number="49"  hits="11"  branch="false" />
+			<line number="50"  hits="11"  branch="false" />
+			<line number="52"  hits="11"  branch="false" />
+			<line number="53"  hits="11"  branch="false" />
+			<line number="54"  hits="11"  branch="false" />
+			<line number="56"  hits="11"  branch="false" />
+			<line number="58"  hits="1"  branch="false" />
+			<line number="59"  hits="11"  branch="true"  condition-coverage="50% (1/2)" />
+			<line number="60"  hits="11"  branch="false" />
+			<line number="61"  hits="11"  branch="false" />
+		</lines>
+		</class>
+	</classes>
+	</package>
+</packages>
+</coverage>

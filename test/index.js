@@ -41,8 +41,8 @@ test('cprf without transform', function(t) {
 
 test('cprf with transform', function(t) {
   var transform = new stream.Transform();
-  transform._transform = function (chunk, enc, cb) {
-    cb(null, chunk);
+  transform._transform = function (data, enc, cb) {
+    cb(null, data);
   };
 
   cprf(src, dest, transform, function (e) {

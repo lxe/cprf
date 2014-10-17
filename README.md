@@ -13,6 +13,7 @@ Asynchronously, recursively copy directories and files.
  - Automatically creates non-existing directories
  - Strictly programmatic approach
  - Simple usage interface
+ - Customizeable copy action
  - Fully asynchronous
  - Uses graceful-fs to retry EMFILE errors
  - Tests!
@@ -25,17 +26,49 @@ npm install cprf
 
 ## Usage
 
+To copy `./my_source` to `./my_destination`:
+
 ```javascript
 var cprf = require('cprf');
 
 cprf('./my_source', './my_destination', function (err) {
-  if (err) {
-    console.error(err);
-  }
+  if (err) throw err;
 });
 ```
 
+You can also completely customize the copy procedure by listening to the `copy` event. This allows you to do things like changing destination file names and modifying file contents on copy.
+
+```javascript
+var cprf = require('cprf');
+var stream = require('stream');
+
+var makeUpperCase = new stream.Transform();
+makeUpperCase._transform = function (chunk, enc, cb) {
+  cb(null, chunk.toString().toUpperCase());
+};
+
+cprf('./my_source', './my_destination', function (err) {
+  if (err) throw err;
+}).on('copy', function (stats, src, dest, copy) {
+  copy(src, dest, makeUpperCase);
+});
+```
+
+The `copy` event emits the following data:
+
+ - `stats` - the `[fs.Stat](http://nodejs.org/api/fs.html#fs_class_fs_stats)` object resulting from running `[fs.lstat()](http://nodejs.org/api/fs.html#fs_fs_lstat_path_callback)` on the source;
+ - `src` - the absolute source path;
+ - `dest` - the absolute destination path;
+ - `copy` - a function of signature `copy(src, dest, transform)`. You must call it if you wish to actually perform a copy operation. It takes the following arguments:
+   - `src` - the absolute source path;
+   - `dest` - the absolute destination path;
+   - `transform` - a [stream.Transform](http://nodejs.org/api/stream.html#stream_class_stream_transform) instance through which the source file contents will be piped before being written to the destination. If the source is not a file, it will be ignored.
+
 ## Changelog
+
+#### 2.0.0
+
+ - Add ability to customize copy procedure via the copy event.
 
 #### 1.1.0
 

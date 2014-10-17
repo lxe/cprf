@@ -1,63 +1,89 @@
 var fs = require('graceful-fs');
 var path = require('path');
-var async = require('async');
+var parallel = require('run-parallel');
+var stream = require('stream');
+var events = require('events');
 
-module.exports = copy;
+module.exports = cprf;
+module.exports.copy = copy;
+
+function cprf () {
+  return copy.apply(
+    new events.EventEmitter(),
+    [].slice.call(arguments)
+  );
+}
 
 function copy (src, dest, done) {
-  fs.lstat(src, function (err, stats) {
-    if (err) return done(new Error(err));
+  var ee = this;
 
-    if (stats.isDirectory()) {
-      return mkdir(dest, function (err) {
-        if (err) return done(new Error(err));
-        return fs.readdir(src, function (err, files) {
-          if (err) return done(new Error(err));
-          async.each(files, function (file, done) {
-            copy(path.join(src, file), path.join(dest, file), done);
-          }, done);
-        });
-      });
-    }
-
-    if (stats.isSymbolicLink()) {
-      return fs.readlink(src, function (err, link) {
-        if (err) return done(new Error(err));
-        fs.symlink(link, dest, function (err) {
-          done();
-        });
-      });
-    }
-
-    copyFile(src, dest, function (err) {
-      if (err) return done(err);
-      fs.chmod(dest, stats.mode, done);
-    });
-
-  });
-}
-
-function mkdir (dir, done) {
-  fs.exists(dir, function (exists) {
-    return exists ? done() : fs.mkdir(dir, done);
-  });
-}
-
-function copyFile (src, dest, done) {
-  var doneCalled = false;
-
-  var fin = fs.createReadStream(src);
-  fin.on('error', finish);
-
-  var fout = fs.createWriteStream(dest);
-  fout.on('error', finish);
-  fout.on('close', finish);
-
-  fin.pipe(fout);
-
-  function finish (err) {
-    if (doneCalled) return;
-    doneCalled = true;
-    done(err);
+  function _error (err) {
+    var deepError = new Error(err);
+    ee.emit('error', deepError);
+    return done(deepError);
   }
+
+  fs.lstat(src, function (err, stats) {
+    if (err) return _error(err);
+
+    ee.emit('copy', stats, src, dest, _copy);
+
+    if (!ee.listeners('copy').length) {
+      return _copy(src, dest, null);
+    }
+
+    function _copy (src, dest, transform) {
+
+      // Directory
+      if (stats.isDirectory()) {
+        return fs.mkdir(dest, function (err) {
+          if (err && err.code !== 'EEXIST') {
+            return _error(err);
+          }
+
+          fs.readdir(src, function (err, files) {
+            if (err) return _error(err);
+
+            parallel(files.map(function (file) {
+              return copy.bind(ee,
+                path.join(src, file),
+                path.join(dest, file));
+            }), done);
+
+          });
+        });
+      }
+
+      // Symlink
+      if (stats.isSymbolicLink()) {
+        return fs.readlink(src, function (err, link) {
+          if (err) return _error(err);
+
+          fs.symlink(link, dest, function (err) {
+            done(null);
+          });
+        });
+      }
+
+      // File
+      var fin = fs.createReadStream(src);
+      fin.on('error', _error);
+
+      var fout = fs.createWriteStream(dest);
+      fout.on('error', _error);
+
+      fout.on('finish', function () {
+        fs.chmod(dest, stats.mode, done);
+      });
+
+      if (transform) {
+        fin.pipe(transform).pipe(fout);
+      } else {
+        fin.pipe(fout);
+      }
+    }
+
+  });
+
+  return ee;
 }

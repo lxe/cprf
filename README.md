@@ -56,7 +56,7 @@ cprf('./my_source', './my_destination', function (err) {
 
 The `copy` event emits the following data:
 
- - `stats` - the `[fs.Stat](http://nodejs.org/api/fs.html#fs_class_fs_stats)` object resulting from running `[fs.lstat()](http://nodejs.org/api/fs.html#fs_fs_lstat_path_callback)` on the source;
+ - `stats` - the [`fs.Stat`](http://nodejs.org/api/fs.html#fs_class_fs_stats) object resulting from running [`fs.lstat()`](http://nodejs.org/api/fs.html#fs_fs_lstat_path_callback) on the source;
  - `src` - the absolute source path;
  - `dest` - the absolute destination path;
  - `copy` - a function of signature `copy(src, dest, transform)`. You must call it if you wish to actually perform a copy operation. It takes the following arguments:
@@ -66,7 +66,7 @@ The `copy` event emits the following data:
 
 ## Changelog
 
-#### 2.0.0
+#### 2.0.1
 
  - Add ability to customize copy procedure via the copy event.
 

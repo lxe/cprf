@@ -61,13 +61,13 @@ test('transforming copy listener modifying destination filename', function (t) {
   var _src = path.join(src, 'file.txt');
   var _dest = path.join(dest, 'file.txt');
 
-    cprf(_src, _dest, function (e) {
-      t.error(e, 'should not error');
-      diff(_src, _dest + '.test', t, t.end);
-    })
-    .on('copy', function (stats, src, dest, copy) {
-      copy(src, dest + '.test', null);
-    });
+  cprf(_src, _dest, function (e) {
+    t.error(e, 'should not error');
+    diff(_src, _dest + '.test', t, t.end);
+  })
+  .on('copy', function (stats, src, dest, copy) {
+    copy(src, dest + '.test', null);
+  });
 });
 
 test('teardown', function (t) {

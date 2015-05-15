@@ -70,6 +70,24 @@ test('transforming copy listener modifying destination filename', function (t) {
   });
 });
 
+test('skipping files in copy listener', function (t) {
+  var _dest = path.join(dest, 'skip');
+  cprf(src, _dest, function (e) {
+    t.error(e, 'should not error');
+    fs.readdir(_dest, function (err, files) {
+        if (err) return t.end(err);
+        t.deepEqual(files, ['dir_1_level', 'dir_2_levels', 'dir_3_levels']);
+        t.end();
+    });
+  }).on('copy', function (stats, src, dest, copy, skip) {
+    if (stats.isDirectory()) {
+      copy(src, dest, null);
+    } else {
+      skip();
+    }
+  });
+});
+
 test('teardown', function (t) {
   rimraf(dest, t.end);
 });

@@ -26,7 +26,7 @@ function copy (src, dest, done) {
   fs.lstat(src, function (err, stats) {
     if (err) return _error(err);
 
-    ee.emit('copy', stats, src, dest, _copy);
+    ee.emit('copy', stats, src, dest, _copy, done);
 
     if (!ee.listeners('copy').length) {
       return _copy(src, dest, null);
